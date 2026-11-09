@@ -1,0 +1,40 @@
+<%= erb :"common/header" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badly Brewed Coffee Home Page</title>
+  <link rel="stylesheet" href="/css/home-page.css">
+  <link rel="stylesheet" href="/css/MainStyleSheet.css">
+</head>
+
+<body>
+    <div id="firstPage">
+      <h2>What we offer <%= session["user_type"] %></h2>
+      <img style="width: 20%;" src="/CoffeeMug.png" alt="offer">
+      <img style="width: 10%;" src="/BeanBag.png" alt="offer">
+      <form action="/order_page" method="get">
+        <button type="submit">Order now</button>
+      </form>
+    </div>
+
+    <img align="right" src="/Coffee-bean-splash.jpg" alt="coffee" style="width:35%;padding-top:calc(15vh);">
+    <div id="secondPage"> 
+      <h2>Your coffee. <br>
+      Seamlessly Brewed</h2>
+      <p>Made for mornings meetings and everything in between.</p>
+    </div>
+
+    <img align="left" src="/homePagePhoto.png" alt="coffee" style="width:35%;padding-top:calc(15vh);">
+    <div id="thirdPage"> 
+      <h2 id="text" style="padding-top: calc(10vh);">Our location</h2>
+      <p id="text">Sheffield</p>
+      <h2 id="text">Openning hours</h2>
+      <p id="text">Mon-Fri: 9AM-5PM<br>
+      Sat: 9AM-3PM<br>
+      Sun: closed</p>
+    </div>
+  </body>
+</html>

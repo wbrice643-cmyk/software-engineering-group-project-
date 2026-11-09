@@ -1,0 +1,60 @@
+<html>
+
+  <head>
+      <title>Header</title>
+      <link rel="stylesheet" href="/css/header.css">
+  </head>
+
+  <body>
+    <header class="navbar">
+      <div class="logo">Badly Brewed</div>
+      <nav class="nav-links">
+        <% unless session["logged_in"] %>
+          <a href="login">Login In</a>
+        <% else %>
+
+          <a href="/logout">Logout</a>
+
+          <% user = Account[session[:account_number]] %>
+
+          <% if user.account_type == 0 %> <% # Barista %>
+            <a>Welcome, <%= user.name %></a>
+            <a href="/customer-database">Customer Database</a>
+            <a href="/product-database">Product Database</a>
+            <a href="/orders-DB">Orders Database</a>
+          <% end %>
+
+          <% if user.account_type == 1 %> <% # manager %>
+            <a>Welcome, <%= user.name %></a>
+            <a href="/account-database">Account Database</a>
+            <a href="/product-database">Product Database</a>
+            <a href="/create-account">Create Account</a>
+            <a href="/add-product">Add Product</a>
+            <a href="/orders-DB">Orders Database</a>
+            <a href="/manager/accounts">Accounts Dashboard</a>
+            <a href="/manager/sales">Sales Dashboard</a>
+          <% end %>
+
+          <% if user.account_type == 2 %> <% # admin %>
+            <a>Welcome, <%= user.name %></a>
+            <a href="/account-database">Account Database</a>
+            <a href="/product-database">Product Database</a>
+            <a href="/orders-DB">Orders Database</a>
+            <a href="/admin/orders">Admin Dashboard</a>
+          <% end %>
+
+          <% if user.account_type == 3 %> <% # customer %>
+            <a>Welcome, <%= user.name %></a>
+            <a href="/loyalty-card">Loyalty Card</a>
+            <a href="/orders-DB">Your Orders</a>
+          <% end %>
+
+        <% end %> 
+        <a href="/">Home</a>
+        <a href="/order_page">Shop</a>
+        <a href="/menu">Menu</a>
+
+      </nav>
+    </header>
+  </body>
+</html>

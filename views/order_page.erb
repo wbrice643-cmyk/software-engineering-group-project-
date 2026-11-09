@@ -1,0 +1,194 @@
+<%= erb :"common/header" %>
+
+<html>
+
+  <head>
+    <title>Order page</title>
+    <link rel = "stylesheet" href = "/css/MainStyleSheet.css">
+    <link rel = "stylesheet" href = "/css/order_page.css">
+  </head>
+
+<body>
+
+    <% if session[:stock_error] != nil %>
+      <script>alert("<%= session[:stock_error] %>")</script>
+    <% end %>
+
+    <br>
+    <div class = "welcome_mssg">
+      <p>Welcome! What would you like to order?</p>
+    </div>
+    <p class = "subtitle">Order your beans below!</p>
+
+    <br>
+
+    <!--filtering buttons-->
+    <div class = "filter">
+      <button class = "active" onclick = "filter('all',this)">All</button>
+      <button class = "button_drinks" onclick = "filter('drinks',this)">Drinks</button>
+      <button class = "coffee beans" onclick = "filter('beans',this)">Coffee beans</button>
+    </div>
+
+    <br>
+    <br>
+
+    <!--Beans-->
+
+    <% if @products.any? %>
+      <% @products.each do |product| %>
+        <% if product.product_type == 0 %>
+
+          <% bean = Beans[product.product_id] %>
+          <% stock = Stock[product.product_id] %>
+          <% next if bean.nil? %>
+
+          <div class="product" data-category = "beans">
+
+            <div class="product-image">
+              <img src = "<%= product.image %>" width = "200" height = "300" styleborder-radius: 8px; object-fit: cover;>
+            </div>
+
+            <div class = "product-info">
+              <h2><%= product.name %></h2>
+              <p><%= product.description %></p>
+              <div class="price">£<%= product.price %> / <%= bean.weight %>g / <%= bean.roast_level %> / <%= bean.origin %></div>
+              <% if stock.stock> 0 %>
+                <form action= "/order/add" method = "post">
+                  <input type="hidden" name="name" value="<%= product.name %>">
+                  <input type="hidden" name="price" value="<%= product.price %>">
+                  <label for="qty_<%= product.product_id %>">Qty:</label>
+                  <select id="qty_ <%= product.product_id %>" name = "qty">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                  <br>
+                  <button type = "submit">Add to Order</button>
+                </form>
+              <% else %>
+                <label>OUT OF STOCK</label>
+              <% end %>
+            </div>
+          </div>
+        
+        <% end %>
+      <% end %>
+    <% end %>
+
+        
+      
+
+    <!--Drinks--!>
+    <% if @products.any? %>
+      <% @products.each do |product| %>
+        <% if product.product_type == 1 %>
+
+        <% stock = Stock[product.product_id] %>
+        <div class = "product" data-category= "drinks">
+
+          <div class="product-image">
+            <img src = "<%= product.image %>" width = "200" height = "300" styleborder-radius: 8px; object-fit: cover;>
+          </div>
+
+          <div class="product-info">
+            <h2><%= product.name %></h2>
+            <p><%= product.description %></p>
+            <div class="price">£<%= product.price %></div>
+            <% if stock.stock> 0 %>
+              <form action = "/order/add" method = "post">
+                <input type="hidden" name="name" value="<%= product.name %>">
+                <input type="hidden" name="price" value="<%= product.price %>">
+                <label for="qty_<%= product.product_id %>">Qty:</label>
+                <select id="qty_<%= product.product_id %>" name="qty">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <label for="milk_<%= product.product_id %>">Milk:</label>
+                <select id="milk_<%= product.product_id %>" name="milk">
+                  <option value="Oat">Oat</option>
+                  <option value="Soy">Soy</option>
+                  <option value="Whole">Whole</option>
+                </select>
+                <label for="size_<%= product.product_id %>">Size:</label>
+                <select id="size_<%= product.product_id %>" name="size">
+                  <option value="Regular">Regular</option>
+                  <option value="Large">Large</option>
+                </select>
+                <br>
+                <button type="submit">Add to Order</button>
+              </form>
+            <% else %>
+              <label>Out of Stock</label>
+            <% end %>
+          </div>
+        </div>
+
+        <% end %>
+      <% end %>
+    <% end %>
+
+
+ 
+  <!-- Order Summary -->
+  <div class="summary" id = "summary">
+    <h2>Your Order</h2>
+
+    <% if @order_items.empty? %>
+      <p class = "empty-msg">Nothing added yet.</p>
+    <% else %>
+      <ul id="order-list">
+        <% @order_items.each do |item| %>
+        <li>
+          <%= item[:name] %> x<%= item[:qty] %> 
+          <% if item[:milk] %> (<%= item[:milk] %> , <%= item[:size] %>) <% end %> -
+          £<%= "%.2f" % (item[:price] * item[:items_payed]) %>
+          <form action="/order/remove" method="post" style="display:inline;">
+            <input type="hidden" name="name" value="<%= item[:name] %>">
+            <button type="submit">Remove</button>
+          </form>
+        </li>
+        <% end %>
+      </ul>
+      <div class="total">Total: £<%= "%.2f" % @total %></div>
+      <% if session[:total_points] >= 10 %>
+        <p> Discount Applied </p>
+      <% end %>
+      <form action="/order/checkout" method="post">
+        <p>How would you like to pay?</p>
+        <input type="radio" name="payment" value="Paid"> Pay Online<br>
+        <input type="radio" name="payment" value="Unpaid"> Pay Later<br>
+        <input type="radio" name="payment" value="Pay in Store"> Pay in Store<br>
+        <br>
+        <button type="submit" id="checkout-btn">Place Order</button>
+      </form>
+    <% end %>
+  </div>
+    
+
+
+  <script>
+
+    function filter(category,button) {
+      <!--this updates which button looks active-->
+      document.querySelectorAll('.filter button').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      button.classList.add('active');
+
+      document.querySelectorAll('.product').forEach(function(card){
+        if (category == "all" || card.dataset.category == category) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+    
+  </script>
+
+
+
+</body>
+
+</html>

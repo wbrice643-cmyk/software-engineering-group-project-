@@ -1,0 +1,37 @@
+<%= erb :"common/header" %>
+<html>
+  <body>
+
+    <h2>Orders</h2>
+    <% unless session["logged_in"] && @user.account_type == 3 %>
+      <div class="navigation">
+        <form>
+          <p>Enter the order number:
+            <input type="text" name="order_Number" value="<%= h @order_Number %>"/>
+            <input type="submit" value="Submit" /></p>
+          </form>
+      </div>
+    <% end %>
+
+    <% if @orders.any? %>
+      <div class = "customer_container"> 
+        <table id = "customer_table">
+          <tr>
+            <th>Order_number</th>
+            <th>Account_number</th>
+            <th>Payment</th>
+          </tr>
+
+        <% @orders.each do |record| %>
+          <tr>
+            <td><%= record.order_number%></td>
+            <td><%= record.account_number %></td>
+            <td><%= record.payment %></td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+         <p> no data found</p>
+      <% end %>
+  </body>
+</html>

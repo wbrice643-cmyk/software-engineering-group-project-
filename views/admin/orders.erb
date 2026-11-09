@@ -1,0 +1,81 @@
+<%= erb :"common/header" %>
+
+<html>
+  <head>
+    <title>Admin — Order Payment Correction</title>
+    <link rel="stylesheet" href="/css/MainStyleSheet.css">
+    <link rel="stylesheet" href="/css/admin-orders.css">
+    <link rel="stylesheet" href="/css/header.css">
+  </head>
+
+  <body>
+    <div class="dashboard">
+      <h1>Order Payment Correction</h1>
+
+      <% if @error %>
+        <p class="error"><%= h @error %></p>
+      <% end %>
+
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Account Number</th>
+            <th>Products</th>
+            <th>Current Status</th>
+            <th>Update Status</th>
+            <th>Reason</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr>
+              <td><%= h order.order_number %></td>
+              <td><%= h order.account_number %></td>
+              <td><%= order.payment %></td>
+              <td>
+                <form action="/admin/orders/<%= h order.order_number %>/update_payment" method="post">
+                  <select name="payment">
+                    <option value="Paid">Paid</option>
+                    <option value="Unpaid">Unpaid</option>
+                    <option value="Pay in Store">Pay in Store</option>
+                  </select>
+                  <input type="text" name="reason" placeholder="Reason for change" required>
+                  <button type="submit">Update</button>
+                </form>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <h2>Audit Log</h2>
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Changed By (Account #)</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Reason</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @logs.each do |log| %>
+            <tr>
+              <td><%= h log.order_number %></td>
+              <td><%= h log.admin_account %></td>
+              <td><%= h log.old_status %></td>
+              <td><%= h log.new_status %></td>
+              <td><%= h log.reason %></td>
+              <td><%= h log.changed_at %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </body>
+</html>

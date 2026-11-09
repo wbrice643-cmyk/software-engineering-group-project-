@@ -1,0 +1,60 @@
+<%= erb :"common/header" %>
+
+<html>
+  <head>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+
+  <body>
+    <div class = "add-beans">
+      <label>Add Coffee Beans</label>
+      <form method = "post" action = "/add-beans" enctype="multipart/form-data">
+        <input type = "text" name = "name" placeholder = "Product Name">
+        <input type = "number" name = "price" step = "any" placeholder = "Product Price">
+        <input type = "file" name = "image" placeholder = "Product Image">
+
+        <br><label for = "description">Enter Product Description </label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+
+        <label for = "origin">Select Bean Origin</label>
+        <select name = "origin" id = "origin">
+          <option value = "arabic">Arabic</option>
+          <option value = "ethiopian">Ethiopin</option>
+          <option value = "brazilian">Brazilian</option>
+        </select>
+
+        <label for = "roast_level">Select Roast Level</label>
+        <select name = "roast_level" id = "roast_level">
+          <option value = "light">Light</option>
+          <option value = "medium">Medium</option>
+          <option value = "dark">Dark</option>
+        </select>
+
+        <input type = "number" name = "weight" placeholder = "Enter Bean Weight">
+        <input type = "number" name = "stock" placeholder = "Inital Stock">
+
+        <input type = "submit" class = "add-product-btn" value = "Add Beans">
+      </form>
+    </div>
+
+    <br>
+    <br>
+
+    <div class = "add-coffee">
+      <label>Add Coffee</label>
+      <form method = "post" action = "/add-coffee" enctype="multipart/form-data">
+        <input type = "text" name = "name" placeholder = "Product Name">
+        <input type = "number" name = "price" step = "any" placeholder = "Product Price">
+        <input type = "file" name = "image" placeholder = "Product Image">
+
+        <br><label for = "description">Enter Product Description </label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+
+        <input type = "number" name = "stock" placeholder = "Inital Stock">
+
+        <input type = "submit" class = "add-product-btn" value = "Add Coffee">
+      </form>
+    </div>
+  </body>
+</html>

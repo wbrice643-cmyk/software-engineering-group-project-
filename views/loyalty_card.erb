@@ -1,0 +1,50 @@
+<%= erb :"common/header" %>
+
+<html>
+<head>
+  <title>Badly Brewed Coffee</title>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <title>Loyalty Card</title>
+
+  <style>
+
+  .loyalty_circles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dot {
+    width: 7vw; 
+    height: 7vw;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot.points {
+    background-color: #2ecc71;
+  }
+
+</style>
+
+</head>
+
+  <body>
+
+    <h2>Number of Loyalty points</h2>
+
+    <div class = "loyalty_circles">
+      <%  loyalty = LoyaltyPoints[session[:account_number]] %>
+        <% (1..10).each do |point| %>
+          <% if loyalty && point <= loyalty.points %>
+            <span class = "dot points"></span>
+          <% else %>
+            <span class = "dot"></span> 
+          <% end %>
+      <% end %> 
+    </div>
+
+  </body>
+</html>

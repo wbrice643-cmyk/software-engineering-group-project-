@@ -1,0 +1,18 @@
+<%= erb :"common/header" %>
+
+<h1>Thank you for your order!</h1>
+
+<ul>
+    <% @order_items.each do |item| %>
+        <li><%= item[:name] %> x <%= item[:qty] %> - £ <%= "%.2f" % (item[:price] *item[:qty]) %></li>
+    <% end %>
+</ul>
+
+<% if @payment == "Pay in Store" %>
+  <p>Please pay at the counter when you collect your order!</p>
+<% else %>
+  <p>Your order has been placed. Please pay when ready.</p>
+<% end %>
+
+<p>Total: £<%= "%.2f" % @total %></p>
+<a href = "/order_page">Order again</a>

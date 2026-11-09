@@ -1,0 +1,140 @@
+<%= erb :"common/header" %>
+
+<html>
+  <head>
+    <title>Product Database</title>
+  </head>
+
+  <body>
+
+    <h2>Product Database</h2>
+
+    <div class="navigation">
+      <form>
+        <p>Enter the Product Name:
+          <input type="text" name="name_search" value="<%= h @name_search %>" placeholder = "Product Name"/>
+          <input type="submit" value="Submit" /></p>
+      </form>
+    </div>
+
+    <div class="navigation">
+      <form action = "/delete-product" method = "POST">
+        <p>Enter the ID of the Product to be deleted:
+          <input type="number" name="product_id" id = "product_id"  placeholder = "Product ID">
+          <input type="submit" onclick="return confirm('Are you sure?')">
+        </form>
+    </div>
+
+    <div class="navigation">
+      <form action = "/set-stock" method = "POST">
+        <p>Set Stock of Product:
+          <input type="number" name="product_id" id = "product_id"  placeholder = "Product ID">
+          <input type="number" name="set_stock" id = "set_stock"  placeholder = "New product Stock">
+          <input type="submit" onclick="return confirm('Are you sure?')">
+        </form>
+    </div>
+
+    <div class="tables-wrapper">
+
+      <% if @products.any? { |p| p.product_type == 0 } %>
+        <div class = "products_container">
+          <table id = "products_table">
+            <tr>
+              <th>Product id</th>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Origin</th>
+              <th> Roast Level</th>
+              <th>Weight</th>
+              <th>Stock</th>
+              <th>Image</th>
+            </tr>
+
+          <% @products.each do |product| %>
+            <% if product.product_type == 0 %>
+            <tr>
+              <td><%= product.product_id%></td>
+              <td><%= product.product_type %></td>
+              <td><%= product.name %></td>
+              <td><%= product.price %></td>
+              <td><%= product.description %></td>
+
+              <% bean_data = Beans[product.product_id] %>
+              <% stock_data = Stock[product.product_id] %>
+
+              <% if bean_data %>
+                <td><%= bean_data.origin %></td>
+                <td><%= bean_data.roast_level %></td>
+                <td><%= bean_data.weight %>g</td>
+              <% end %>
+
+              <% if stock_data %>
+                <% if stock_data.stock == 0 %>
+                  <td><%= "Out Of Stock" %>
+                <% else %>
+                  <td><%= stock_data.stock %></td>
+              <% end %>
+            <% end %>
+              <td><img src="/<%= product.image %>" style="width: 100px;"></td>
+            </tr>
+            <% end %>
+          <% end %>
+          </table>
+        <% else %>
+            <p> no data found</p>
+        <% end %>
+
+      <% if @products.any? %>
+        <div class = "products_container"> 
+          <table id = "products_table">
+            <tr>
+              <th>Product id</th>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Stock</th>
+              <th>Image</th>
+            </tr>
+
+          <% @products.each do |product| %>
+            <% if product.product_type == 1 %>
+              <tr>
+                <td><%= product.product_id%></td>
+                <td><%= product.product_type %></td>
+                <td><%= product.name %></td>
+                <td><%= product.price %></td>
+                <td><%= product.description %></td>
+
+                <% bean_data = Beans[product.product_id] %>
+                <% stock_data = Stock[product.product_id] %>
+
+                <% if bean_data %>
+                  <td><%= bean_data.origin %></td>
+                  <td><%= bean_data.roast_level %></td>
+                  <td><%= bean_data.weight %>g</td>
+                <% end %>
+
+
+                <% if stock_data %>
+
+                  <% if stock_data.stock == 0 %>
+                    <td><%= "Out Of Stock" %>
+                  <% else %>
+                    <td><%= stock_data.stock %></td>
+                <% end %>
+              <% end %>
+                <td><img src="/<%= product.image %>" style="width: 100px;"></td>
+              </tr>
+            <% end %>
+          <% end %>
+          </table>
+        <% else %>
+            <p> no data found</p>
+        <% end %>
+
+    <div>
+  </body>
+</html>

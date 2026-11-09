@@ -1,0 +1,71 @@
+<%= erb :"common/header" %>
+
+<html>
+  <head>
+    <title>Sales Metrics — Manager Dashboard</title>
+    <link rel="stylesheet" href="/css/MainStyleSheet.css">
+    <link rel="stylesheet" href="/css/manager-sales.css">
+  </head>
+
+  <body>
+    <div class="dashboard">
+      <h1>Sales Metrics</h1>
+
+      <div class="metrics-grid">
+
+        <div class="metric-section">
+          <h2>Coffees Sold by Type</h2>
+          <% if @coffees.empty? %>
+            <p class="no-data">No coffee sales recorded yet.</p>
+          <% else %>
+            <table class="metric-table">
+              <thead>
+                <tr><th>Coffee</th><th>Units Sold</th></tr>
+              </thead>
+              <tbody>
+                <% @coffees.each do |name, count| %>
+                  <tr>
+                    <td><%= h name %></td>
+                    <td><%= h count %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+
+        <div class="metric-section">
+          <h2>Beans Sold by Origin & Roast</h2>
+          <% if @beans.empty? %>
+            <p class="no-data">No bean sales recorded yet.</p>
+          <% else %>
+            <table class="metric-table">
+              <thead>
+                <tr><th>Origin - Roast</th><th>Units Sold</th></tr>
+              </thead>
+              <tbody>
+                <% @beans.each do |type, count| %>
+                  <tr>
+                    <td><%= h type %></td>
+                    <td><%= h count %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+
+      </div>
+
+      <div class="free-coffees">
+        <h2>Free Coffees Redeemed</h2>
+        <p class="stat-value"><%= h @free_coffees %></p>
+      </div>
+
+      <div class="nav-links">
+        <a href="/manager/membership">Membership Growth</a> |
+        <a href="/manager/accounts">Account Inactivity</a>
+      </div>
+    </div>
+  </body>
+</html>

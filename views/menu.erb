@@ -1,0 +1,144 @@
+<%= erb :"common/header" %>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badly Brewed</title>
+
+  <link rel="stylesheet" href="/css/menu.css">
+</head>
+
+<body>
+
+  <section class="menu-section">
+    <h1>Menu</h1>
+    <p class="subtitle">A perfect start to your day with balanced richness.</p>
+
+    <div class="menu-grid">
+
+      <div class="menu-column">
+        <% if @products.any? %>
+          <% @products.each_with_index do |product, index| %>
+            <% if product.product_type == 1 && index % 2 != 0 %>
+
+            <div class="menu-item">
+                <div class="menu-item-text">
+                  <h3><%= product.name %></h3>
+                  <p><%= product.description %></p>
+                </div>
+                <div class="price">£<%= product.price %></div>
+              </div>
+
+            
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="menu-column">
+        <div class="menu-item">
+          <% if @products.any? %>
+          <% @products.each_with_index do |product, index| %>
+            <% if product.product_type == 1 && index % 2 == 0 %>
+              <div class="menu-item">
+                <div class="menu-item-text">
+                  <h3><%= product.name %></h3>
+                  <p><%= product.description %></p>
+                </div>
+                <div class="price">£<%= product.price %></div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+         
+      </div>
+
+    </div>
+  </section>
+
+  <div class="image-section">
+    <img src="/menu_coffee.jpeg" alt="Coffee" class="image">
+  </div>
+  
+  <section class="bb-addon-section">
+  <h2>Add-ons</h2>
+
+  <div class="bb-addon-grid">
+
+    <div class="bb-addon-item">
+      <span>Extra Shot</span>
+      <span class="bb-addon-price">+£0.80</span>
+    </div>
+
+    <div class="bb-addon-item">
+      <span>Oat Milk</span>
+      <span class="bb-addon-price">+£0.50</span>
+    </div>
+
+    <div class="bb-addon-item">
+      <span>Almond Milk</span>
+      <span class="bb-addon-price">+£0.50</span>
+    </div>
+
+    <div class="bb-addon-item">
+      <span>Caramel Syrup</span>
+      <span class="bb-addon-price">+£0.60</span>
+    </div>
+
+    <div class="bb-addon-item">
+      <span>Vanilla Syrup</span>
+      <span class="bb-addon-price">+£0.60</span>
+    </div>
+
+    <div class="bb-addon-item">
+      <span>Whipped Cream</span>
+      <span class="bb-addon-price">+£0.70</span>
+    </div>
+
+  </div>
+  </section>
+
+  <footer class="bb-footer">
+  <div class="bb-footer-container">
+
+    <div class="bb-footer-col bb-footer-brand">
+      <h2>Badly Brewed</h2>
+      <p>
+        Explore our handcrafted coffee experience with rich flavours,
+        warm moments, and seamless ordering.
+      </p>
+
+      <div class="bb-footer-socials">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="TikTok">♪</a>
+        <a href="#" aria-label="X">X</a>
+      </div>
+
+      <div class="bb-footer-copy">
+        <p>© 2026. All rights reserved.</p>
+        <a href="#">Terms &amp; conditions</a>
+      </div>
+    </div>
+
+    <div class="bb-footer-col">
+      <h3>CONTACT</h3>
+      <p>123-123-1234</p>
+      <p>info@email.com</p>
+    </div>
+
+    <div class="bb-footer-col bb-footer-newsletter">
+      <h3>NEWSLETTER</h3>
+      <label for="newsletter-email">Your email</label>
+      <input type="email" id="newsletter-email" placeholder="Enter email">
+      <button type="button">Send order</button>
+    </div>
+
+  </div>
+  </footer>
+
+</body>
+</html>

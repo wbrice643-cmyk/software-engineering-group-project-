@@ -1,0 +1,77 @@
+<%= erb :"common/header" %>
+
+<html>
+  <head>
+    <title>Account Database</title>
+    <link rel="stylesheet" type="text/css" href="/customer_DB.css">
+  </head>
+
+  <body>    
+
+    <h2>Account Database</h2>
+
+
+    <div class="navigation">
+      <form>
+        <p>Enter the Customer id:
+          <input type="text" name="id_search" value="<%= h @id_search %>"/>
+          <input type="submit" value="Submit" /></p>
+        </form>
+    </div>
+
+    <div class="navigation">
+        <form action = "/delete-account-a" method = "POST">
+          <p>Enter the ID of the Account to be deleted:
+          <input type="number" name="account_number" id = "account_number">
+          <input type="submit" onclick="return confirm('Are you sure?')">
+      </form>
+    </div>
+
+
+    <% if @accounts.any?%>
+      <div class = "customer_container"> 
+        <table id = "customer_table">
+          <tr>
+            <th>Account Number</th>
+            <th>First Name</th>
+            <th>Second Name </th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Creation Date</th>
+            <th>Last Used</th>
+            <th>Status</th>
+          </tr>
+
+        <% @accounts.each do |record| %>
+          <% if record.account_type != 3 %>
+            <tr>
+              <td><%= record.account_number%></td>
+              <td><%= record.first_name %></td>
+              <td><%= record.surname %></td>
+              <td><%= record.email %></td>
+              <td><%= record.phone_number %></td>
+              <td><%= record.account_creation %></td>
+              <td><%= record.last_used %></td>
+
+              <% account_status = @accountStatus.find { |acc| acc.account_number == record.account_number } %>
+
+              <% if account_status %>
+                  <td><%= account_status.status %>
+              <% end %>
+
+              <% account_points = @loyaltyPoints.find { |acc| acc.account_number == record.account_number } %>
+
+              <% if account_points %>
+                <td><%= account_points.points %>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+        </table>
+    <% else %>
+      <p> no data found</p>
+    <% end %>
+
+      
+  </body>
+</html>

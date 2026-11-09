@@ -1,0 +1,30 @@
+<%= erb :"common/header" %>
+
+<html>
+    <head>
+        <title>Create Account</title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    
+    <body class = "signup">
+        <div class = "title">
+          <h1>Badly Brewed Coffee</h1>
+        </div>
+
+        <div class = "login-box">
+
+          <form method = "post" action = "/signup">
+            <input type = "text" name = "first_name" placeholder = "First Name">
+            <input type = "text" name = "surname" placeholder = "Second Name">
+            <input type = "email" name = "email" placeholder = "Email">
+            <input type = "tel" name = "phone_number" placeholder = "Phone Number">
+            <input type = "Password" name = "password" placeholder = "Password">
+            <input type = "submit" class = "create-account-btn" value = "Create Account">
+          </form>
+
+        </div>
+
+        <img align="right" src="/Coffee-bean-splash.jpg" alt="coffee" class="hide-small" style="width:35%;padding-top:calc(15vh);" >
+
+    </body>
+</html>

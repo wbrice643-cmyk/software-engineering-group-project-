@@ -1,0 +1,46 @@
+<%= erb :"common/header" %>
+
+<html>
+  <head>
+    <title>Membership Growth — Manager Dashboard</title>
+    <link rel="stylesheet" href="/css/MainStyleSheet.css">
+    <link rel="stylesheet" href="/css/manager-membership.css">
+  </head>
+
+  <body>
+    <div class="dashboard">
+      <h1>Membership Growth</h1>
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <p class="stat-label">Total Members</p>
+          <p class="stat-value"><%= h @total_members %></p>
+        </div>
+
+        <div class="stat-card">
+          <p class="stat-label">Sign-ups This Month</p>
+          <p class="stat-value"><%= h @signups[:this_month] %></p>
+        </div>
+
+        <div class="stat-card">
+          <p class="stat-label">Sign-ups Last Month</p>
+          <p class="stat-value"><%= h @signups[:last_month] %></p>
+        </div>
+
+        <div class="stat-card">
+          <p class="stat-label">Monthly Change</p>
+          <% change = @signups[:change] %>
+          <p class="stat-value <%= change > 0 ? 'positive' : change < 0 ? 'negative' : 'neutral' %>">
+            <%= change > 0 ? '+' : '' %><%= h change %>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="nav-links">
+        <a href="/manager/accounts">View Account Inactivity Dashboard</a>
+      </div>
+    </div>
+  </body>
+</html>

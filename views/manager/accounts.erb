@@ -1,0 +1,45 @@
+<%= erb :"common/header" %>
+
+<html>
+  <head>
+    <title>Account Status — Manager Dashboard</title>
+    <link rel="stylesheet" href="/css/MainStyleSheet.css">
+    <link rel="stylesheet" href="/css/manager-accounts.css">
+  </head>
+
+  <body>
+    <div class="dashboard">
+      <h1>Account Inactivity Dashboard</h1>
+      <p>Accounts are automatically flagged after 6 months of inactivity and suspended 5 days after the warning.</p>
+
+      <table class="accounts-table">
+        <thead>
+          <tr>
+            <th>Account #</th>
+            <th>Name</th>
+            <th>Account Type</th>
+            <th>Last Login</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @accounts.each do |account| %>
+            <% account_status = @account_statuses.find { |s| s.account_number == account.account_number } %>
+            <% status = account_status ? account_status.status : "unknown" %>
+            <tr class="status-<%= h status %>">
+              <td><%= h account.account_number %></td>
+              <td><%= h account.name %></td>
+              <td><%= h account.account_type %></td>
+              <td><%= h account.last_used %></td>
+              <td><span class="badge badge-<%= h status %>"><%= h status.capitalize %></span></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="nav-links">
+        <a href="/manager/membership">View Membership Growth Dashboard</a>
+      </div>
+    </div>
+  </body>
+</html>

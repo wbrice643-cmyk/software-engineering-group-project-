@@ -1,0 +1,38 @@
+<%= erb :"common/header" %>
+
+<html>
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" href="/css/login-page.css">
+    </head>
+
+    <body>
+      
+      <div class = "split login-image"> 
+        <div class = "login-text">
+          
+        </div>
+      </div>
+      
+      <div class = "split login-form"> 
+        <div class = "login-box">
+
+          <h2>Sign Up</h2>
+
+          <form method "get" action = "/signup">
+            <input type = "submit" class = "create-account-btn" value = "Create Account">
+          </form>
+
+          <hr>
+          <p>Weclome Back, Please Enter Your Details</p><br>
+
+          <form method = "post" action = "/login">
+              <input type = "text" name = "email" placeholder = "Enter Email">
+              <input type = "Password" name = "password" placeholder = "Password">
+              <input type = "submit" class = "sign-in-btn" value = "Sign In">
+          </form>
+          <a href="/account-recovery">Forgot Password?</a>
+        </div>
+      </div>
+    </body>
+</html>

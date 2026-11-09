@@ -1,0 +1,30 @@
+<%= erb :"common/header" %>
+
+<html>
+  <head>
+    <title>Help Form</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+
+  <body class = "help_form_body">
+      
+
+      <div class = "help_form">
+        <div class = "help_box">
+          <h1>Help Form</h1>
+          <form method = "get" action = "help-submitted">
+            <label for = "issue_type">Select Your Issue:</label><br>
+            <select id = "issue_type" name = "issue_type"><br>
+              <option value = "missing-order">Missing Order</option>
+              <option value = "missing-order">Account Issue</option>
+              <option value = "missing-order">Other</option>
+            </select>
+
+            <br><label for = "issue_problem">Please Explain Your Problem:</label><br>
+            <textarea id="help_form" name="help_form" rows="4" cols="50"></textarea><br>
+            <input type = "submit" value = "Submit">
+          </form>
+          </div>
+      </div>
+  </body>
+</html>
